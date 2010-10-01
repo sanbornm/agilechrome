@@ -1,0 +1,27 @@
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>
+<html>
+<head>
+  <script>
+    window.addEventListener("load", windowLoaded, false);
+    function windowLoaded() {
+      chrome.tabs.getSelected(null, function(tab) {
+        document.getElementById('currentLink').innerHTML = tab.url;
+        var taskname = escape(tab.url + " #surf");
+        $.ajax({
+            type: "POST",
+            url: "http://agiletask.me/tasks.xml?api_key=INSERTYOURKEYHERE",
+            data: "task[name]=" + taskname,
+            success: function(){
+                document.getElementById('savedLinks').innerHTML = 'Saved'
+            }
+        });
+      });
+    }
+  </script>
+</head>
+<body>
+<p id="currentLink">Loading ...</p>
+<hr />
+<ul id="savedLinks">Saving ...</ul>
+</body>
+</html>
